@@ -1,0 +1,99 @@
+<% layout('layouts/boilerplate') %>
+    <h3 class="text-center">Upcoming Contests</h3>
+    <div class="card-header">
+        Codeforces
+        <%if(cfl==0){%>
+            (No Contests in Upcoming 7 days)
+            <%}%>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% for(let i=0;i<cfl;i++) { %>
+                <div class="col p-3 m-1">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted">
+                                <a href="<%=cf[i].href%>" target="_blank">
+                                    <%=cf[i].event%>
+                                </a>
+                                <br>
+
+                                Starts at:
+
+                                <%=cf[i].start%>
+
+                                    (UTC)
+                                    <br>
+                                    Duration:<%=(cf[i].duration /60)%> mins
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>
+
+    <div class="card-header">
+        Atcoder
+        <%if(atl==0){%>
+            (No Contests in Upcoming 7 days)
+            <%}%>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% for(let i=0;i<atl;i++) { %>
+                <div class="col p-3 m-1">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted">
+                                <a href="<%=at[i].href%>" target="_blank">
+                                    <%=at[i].event%>
+                                </a>
+                                <br>
+                                Starts at:
+
+                                <%=at[i].start%>
+
+                                    (UTC)
+                                    <br>
+                                    Duration:<%=(at[i].duration /60)%> mins
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>
+
+
+    <div class="card-header">
+        Codechef
+        <%if(ccl==0){%>
+            (No Contests in Upcoming 7 days)
+            <%}%>
+    </div>
+    <div class="container mb-2">
+        <div class="row">
+            <% for(let i=0;i<ccl;i++) { %>
+                <div class="col p-3 m-1">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted">
+                                <a href="<%=cc[i].href%>" target="_blank">
+                                    <%=cc[i].event%>
+                                </a>
+                                <br>
+                                Starts at:
+
+                                <%=cc[i].start%>
+
+                                    (UTC)
+                                    <br>
+                                    Duration:<%=(cc[i].duration /60)%> mins
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>

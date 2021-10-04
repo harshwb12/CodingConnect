@@ -1,0 +1,52 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid mb-0">
+        <span class="navbar-brand">
+            <%=grp.name%>
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <% if(currentUser) { %>
+                    <a class="nav-link text-light" href="/mygroups">Back to my groups</a>
+                    <a class="nav-link text-light" href="/group/<%=grp._id%>/problemset">Problemsets</a>
+                    <span class="nav-link position-relative">
+                        <form action="/group/<%=grp._id%>/announcement/<%=currentUser._id%>/not?_method=PUT"
+                            method="POST" autocomplete="off">
+                            <%if((currentUser.anncCnt.some(n=> n.id == grp._id && n.not!=0))){%>
+                                <%for(let a of currentUser.anncCnt){%>
+                                    <%if(a.id==grp._id){%>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge bg-primary">
+                                            <%=a.not %>
+                                                +
+                                                <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                        <%}%>
+                                            <%}%>
+                                                <%}%>
+                                                    <button class="btn btn-dark text-light my-sm-0 p-0"
+                                                        type="submit">Announcements</button>
+                    </span>
+                    </form>
+                    <% } %>
+            </div>
+
+            <div class="navbar-nav ms-auto">
+                <% if(currentUser) { %>
+
+                    <%if(grp.cntAdmins.indexOf(currentUser._id)!=-1){%>
+
+                        <a class="nav-link text-light" href="/group/<%=grp._id%>/addadm">Make group admin</a>
+                        <%}%>
+
+                            <a class="nav-link text-light" href="/logout">Logout</a>
+                            <% } %>
+
+            </div>
+        </div>
+    </div>
+</nav>

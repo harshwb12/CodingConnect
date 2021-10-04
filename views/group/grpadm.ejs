@@ -1,0 +1,27 @@
+<% layout('layouts/indgrpboilerplate') %>
+    <h3 class="text-center">Make group admin</h3>
+    <form action="/group/<%=grp._id%>/addadm" method="POST" autocomplete="off">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="id">ID</label>
+            <input type="text" class="form-control" id="id" placeholder="Enter the unique id of user" name="id"
+                aria-label="Recipient's username" aria-describedby="button-addon2" required>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add as admin</button>
+        </div>
+    </form>
+
+    <h4 class="mt-2">Current group admins</h4>
+    <div class="row">
+        <% for(let g of grp2.cntAdmins){ %>
+            <div class="col-sm-12 col-md-6 col-lg-4 m-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Username : <%=g.username%> <br>
+                                Email : <%=g.email%> <br>
+                                    Unique Id : <%=g._id%>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>

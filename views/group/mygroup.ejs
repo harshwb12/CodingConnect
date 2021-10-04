@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+
+    <h3 class="text-center">My Groups</h3>
+    <%if(grp.length==0){%>
+        <h4 class="text-center"> No group joined or created</h4>
+        <%}%>
+            <div class="container">
+                <div class="row">
+                    <% for(let g of grp){ %>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <div class="card position-relative" style="width: 18rem;">
+                                <% if(currentUser && g.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#edit<%=g._id%>"
+                                        class="position-absolute top-0 start-100 translate-middle ml-auto badge bg-dark">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <div class="modal fade" id="edit<%=g._id%>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                        Edit group name/description</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/group/<%=g._id%>?_method=PUT" method="POST">
+                                                        <div class="mb-2">
+                                                            <label class="form-label" for="name">Name</label>
+                                                            <input class="form-control" type="text" id="name"
+                                                                value="<%=g.name%>" name="name" required>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="form-label"
+                                                                for="description">Description</label>
+                                                            <input class="form-control" type="text" id="description"
+                                                                value="<%=g.description%>" name="description" required>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <button class="btn btn-secondary">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                        <a href="/group/<%=g._id%>/problemset" class="text-decoration-none">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    Group Name : <%=g.name%>
+                                                </h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                    Group Description : <%=g.description%>
+                                                </h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                    <h6 class="card-subtitle mb-2 text-muted">
+                                                        Total Users : <%=g.cntUsers.length%>
+                                                    </h6>
+                                                </h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                    My progress
+                                                </h6>
+                                                <%for(let u of us){%>
+                                                    <% if(u.grpId==g._id){ %>
+                                                        <h6 class="card-subtitle text-muted">
+                                                            Solved <%=u.noPrbS %>
+                                                                / <%=g.totPrb%> problems
+                                                        </h6>
+                                                        <%break%>
+                                                            <% } %>
+                                                                <%}%>
+                                            </div>
+                                        </a>
+                            </div>
+
+                        </div>
+                        <% } %>
+                </div>
+            </div>

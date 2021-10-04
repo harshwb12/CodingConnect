@@ -1,0 +1,28 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid mb-0">
+        <span class="navbar-brand">
+            <%=grp.name%>
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <% if(currentUser) { %>
+                    <a class="nav-link text-light" href="/mygroups">Back to my groups</a>
+                    <a class="nav-link text-light" href="/group/<%=grp._id%>/problemset">Back to Problemsets</a>
+                    <% } %>
+            </div>
+
+            <div class="navbar-nav ms-auto">
+                <% if(currentUser) { %>
+                    <a class="nav-link text-light" href="/logout">Logout</a>
+                    <% } %>
+
+            </div>
+
+        </div>
+    </div>
+</nav>

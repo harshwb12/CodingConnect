@@ -1,0 +1,31 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid mb-0">
+        <span class="navbar-brand mb-0 h1">CP4U</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <% if(currentUser) { %>
+                    <a class="nav-link text-light" href="/home">Join/Create Group</a>
+                    <a class="nav-link text-light" href="/mygroups">My Groups</a>
+                    <a class="nav-link text-light" href="/upcomingcontest">Upcoming Contests</a>
+                    <% } else {%>
+                        <a class="nav-link text-light" href="/">About</a>
+                        <%}%>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <% if(!currentUser) { %>
+                    <a class="nav-link text-light" href="/register">Register</a>
+                    <a class="nav-link text-light" href="/login">Login</a>
+                    <% } else { %>
+                        <a class="nav-link text-light" href="/profile/<%=currentUser._id%>">User profile</a>
+                        <a class="nav-link text-light" href="/logout">Logout</a>
+                        <% } %>
+
+            </div>
+
+        </div>
+    </div>
+</nav>

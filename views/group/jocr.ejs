@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h3 class="text-center">Join/Create Group</h3>
+
+        <div class="col-lg-5 shadow p-3 my-3 bg-white ">
+            <h3 class="text-center">Join a Group</h3>
+            <form action="/join" method="POST" autocomplete="off">
+                <div class="mb-3">
+                    <label class="form-label" for="id">Group Id</label>
+                    <input class="form-control" placeholder="Enter the group's unique id to join" type="text" id="id"
+                        name="id" required>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary">Join</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5 shadow p-3 my-3 bg-white">
+            <h3 class="text-center">Create a Group</h3>
+            <form action="/create" method="POST" autocomplete="off">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" placeholder="Enter group name" type="text" id="name" name="name"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Description">Description</label>
+                    <input class="form-control" placeholder="Enter group description" type="text" id="description"
+                        name="description" required>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary">Create</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>

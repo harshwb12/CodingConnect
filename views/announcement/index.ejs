@@ -1,0 +1,77 @@
+<% layout('layouts/indgrpboilerplate') %>
+    <h3 class="text-center">Announcements</h3>
+    <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1 ) { %>
+        <div class="shadow p-3 bg-white">
+            <form action="/group/<%=grp._id%>/announcement" method="POST">
+                <div class="mb-1">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" placeholder="Enter the description"
+                        name="description" required></textarea>
+                </div>
+                <div class="mt-1">
+                    <button class="btn btn-info">Add new</button>
+                </div>
+            </form>
+        </div>
+        <% } %>
+
+            <ul class="list-group my-3">
+                <% for(let a of anncmnt) { %>
+                    <% if (grp.annc.indexOf(a._id)!=-1) { %>
+                        <li class="list-group-item shadow p-2 bg-white my-2">
+                            <textarea disabled style="min-width: 100%" class="out">
+                                <%=a.description%> 
+                            </textarea>
+
+                            <div>
+                                Posted at : <%=a.date%>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    Posted by : <%= a.author.username %>
+                                </div>
+                                <% if(currentUser && currentUser._id.equals(a.author._id)) { %>
+                                    <div class="col-3">
+                                        <button type="button" class="btn ml-auto" data-bs-toggle="modal"
+                                            data-bs-target="#Modal<%=a._id%>">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <div class="modal fade" id="Modal<%=a._id%>" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Edit announcement</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form
+                                                            action="/group/<%=grp._id%>/announcement/<%=a._id%>?_method=PUT"
+                                                            method="POST">
+                                                            <div class="row mx-2">
+                                                                <div class="col-12">
+                                                                    <textarea type="text" id="description"
+                                                                        name="description" required
+                                                                        style="min-width: 100%"><%=a.description%></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btn-secondary m-1">Save</button>
+                                                        </form>
+                                                        <form
+                                                            action="/group/<%=grp._id%>/announcement/<%=a._id%>?_method=DELETE"
+                                                            method="POST">
+                                                            <button class="btn btn-danger m-1">delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </li>
+                        <%}%>
+                            <%}%>
+            </ul>

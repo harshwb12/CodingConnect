@@ -1,0 +1,79 @@
+<% layout('layouts/indgrpboilerplate') %>
+    <h3 class="text-center">Problemsets</h3>
+    <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+        <form action="/group/<%=grp._id%>/problemset/new" method="POST" autocomplete="off">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="name">Add a set</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter set's name" name="name"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+            </div>
+        </form>
+        <% } %>
+            <div class="row">
+                <% for(let g of grp.prb){ %>
+                    <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+                        <div class="card position-relative" style="width: 18rem;">
+                            <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#Modal<%=g._id%>"
+                                    class="position-absolute top-0 start-100 translate-middle ml-auto badge bg-dark">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <div class="modal fade" id="Modal<%=g._id%>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    Edit problemset name</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/group/<%=grp._id%>/problemset/<%=g._id%>?_method=PUT"
+                                                    method="POST">
+                                                    <div class="mb-2">
+                                                        <label class="form-label" for="name">Name</label>
+                                                        <input class="form-control" type="text" id="name"
+                                                            value="<%=g.name%>" name="name" required>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <button class="btn btn-secondary">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}%>
+                                    <a href="/group/<%=grp._id%>/problemset/<%=g._id%>" class="text-decoration-none">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                Problemset Name : <%=g.name%>
+                                            </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">
+                                                My progress
+                                            </h6>
+                                            <%if(sol.prbSet.find(obj=> obj.prbSetId == g._id)){%>
+                                                <%for(let s of sol.prbSet){%>
+                                                    <% if(s.prbSetId==g._id){ %>
+                                                        <h6 class="card-subtitle my-1 text-muted">
+                                                            Solved
+                                                            <%=s.solvedPrb.length%>
+                                                                / <%=g.problink.length%> problems
+                                                        </h6>
+                                                        <%break%>
+                                                            <% } %>
+                                                                <%}%>
+                                                                    <%}else{%>
+                                                                        <h6 class="card-subtitle my-1 text-muted">
+                                                                            Solved
+                                                                            0 / <%=g.problink.length%> problems
+                                                                                <%}%>
+                                                                        </h6>
+                                        </div>
+                                    </a>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>

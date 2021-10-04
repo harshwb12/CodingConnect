@@ -1,0 +1,296 @@
+<% layout('layouts/indsetboilerplate') %>
+    <h3 class="text-center">Problemset name : <%=prbset.name%>
+    </h3>
+    <!--add problem/resource-->
+
+    <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+        <form action="/group/<%=grp._id%>/problemset/<%=prbset._id%>" method="POST" autocomplete="off">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="url">Add a problem</label>
+                <input type="text" class="form-control" id="url" placeholder="Enter problem's link" name="url"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>
+            </div>
+        </form>
+        <form action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/src" method="POST" autocomplete="off">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="url">Add study resource</label>
+                <input type="text" class="form-control" id="url" placeholder="Enter study resource's link" name="url"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>
+            </div>
+        </form>
+        <% } %>
+
+            <!--problem list-->
+
+            <ul class=" list-group">
+                <%if(prbset.problink.length!=0) {%>
+                    <li class="list-group-item active" aria-current="true">Problems</li>
+                    <%}%>
+                        <% for(let [i,ps] of prbset.problink.entries() ) { %>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col align-self-start ">
+                                        <%=i%>)
+                                            <a href="<%=ps.url%>" target="_blank">
+                                                <%=ps.url%>
+                                            </a>
+                                    </div>
+
+                                    <!--solved by-->
+                                    <div class="col-auto">
+                                        <button type="button" class="btn" data-bs-toggle="modal"
+                                            data-bs-target="#Sol<%=ps._id%>">
+                                            <i class="bi bi-person-circle"></i>
+                                            <%=ps.isSolvedBy.length%>/<%=grp.cntUsers.length%>
+                                        </button>
+                                        <div class="modal fade" id="Sol<%=ps._id%>" tabindex="-1"
+                                            aria-labelledby="<%=ps._id%>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="<%=ps._id%>">Solved by
+                                                            <%=ps.isSolvedBy.length%> out of <%=grp.cntUsers.length%>
+                                                                    users
+
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <% for(let us of info.problink[i].isSolvedBy){ %>
+                                                                <div class="col-5 border p-1 m-1">
+                                                                    <h6 class="mb-2 text-muted">
+                                                                        Username:<%=us.username%>
+                                                                            <br>
+                                                                            Email:<%=us.email%>
+                                                                                <br>
+                                                                    </h6>
+                                                                </div>
+                                                                <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--check-->
+                                    <div class="col-auto">
+                                        <% if(ps.isSolvedBy.indexOf(currentUser._id)==-1) { %>
+                                            <form
+                                                action="/group/<%=grp._id%>/problemset/<%=prbset.id%>/<%=ps._id%>/check"
+                                                method="POST">
+                                                <input type="checkbox" id="accept" name="accept"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="save"
+                                                    value="yes" onclick="{this.form.submit()}" required>
+                                            </form>
+                                            <% } else { %>
+                                                <form
+                                                    action="/group/<%=grp._id%>/problemset/<%=prbset.id%>/<%=ps._id%>/uncheck"
+                                                    method="POST">
+                                                    <input type="checkbox" id="accept" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" title="unsave"
+                                                        onclick="{this.form.submit()}" name="accept" checked>
+                                                </form>
+                                                <% } %>
+                                    </div>
+                                    <!--fav-->
+                                    <div class="col-auto">
+                                        <% if(ps.isFavOf.indexOf(currentUser._id)==-1) { %>
+                                            <form
+                                                action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/<%=ps._id%>/star"
+                                                method="POST">
+                                                <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Add to favourite">
+                                                    <img src="\star_gray_16.png">
+
+                                                </button>
+                                            </form>
+                                            <% } else {%>
+                                                <form
+                                                    action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/<%=ps._id%>/unstar?_method=DELETE"
+                                                    method="POST">
+                                                    <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="remove from favourite">
+                                                        <img src="\star_yellow_16.png">
+
+                                                    </button>
+                                                </form>
+                                                <%}%>
+                                    </div>
+                                    <div class="col-auto">
+                                        <%if(!(currentUser.note.some(n=> n.id == ps._id))) { %>
+                                            <button type="button" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#example<%=ps._id%>">
+                                                <i class="bi bi-sticky"></i>
+                                            </button>
+                                            <div class="modal fade" id="example<%=ps._id%>" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Add a
+                                                                Note
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form
+                                                                action="/group/<%=grp._id%>/problemset/<%=prbset.id%>/<%=ps._id%>/note"
+                                                                method="POST" autocomplete="off">
+                                                                <div class="mb-3">
+                                                                    <textarea class="form-control" type="text" rows="10"
+                                                                        placeholder="add a note here" id="note"
+                                                                        name="note" required></textarea>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <button class="btn btn-info">save
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%} else {%>
+                                                <% for(let n of currentUser.note){ %>
+                                                    <% if(n.id==ps.id){ %>
+                                                        <button type="button" class="btn" data-bs-toggle="modal"
+                                                            data-bs-target="#Modal<%=ps._id%>">
+                                                            <i class="bi bi-sticky-fill"></i>
+                                                        </button>
+                                                        <div class="modal fade" id="Modal<%=ps._id%>" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            Edit Note
+                                                                        </h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form
+                                                                            action="/group/<%=grp._id%>/problemset/<%=prbset.id%>/<%=ps._id%>/note?_method=PUT"
+                                                                            method="POST" autocomplete="off">
+                                                                            <div class="mb-3">
+                                                                                <textarea class="form-control"
+                                                                                    type="text" id="note" name="note"
+                                                                                    rows="10"
+                                                                                    required><%=n.des%></textarea>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <button class="btn btn-info">save
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <%}%>
+                                                            <%}%>
+                                                                <%}%>
+                                    </div>
+                                    <div class="col-auto">
+                                        <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+                                            <button type="button" class="btn" data-bs-toggle="modal"
+                                                data-bs-target="#editModal<%=ps._id%>">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <div class="modal fade" id="editModal<%=ps._id%>" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form
+                                                                action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/<%=ps._id%>?_method=PUT"
+                                                                method="POST" autocomplete="off">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label" for="url">url</label>
+                                                                    <input class="form-control" type="text" id="url"
+                                                                        name="url" value="<%=ps.url%>" required>
+                                                                </div>
+                                                                <div class="mb-1">
+                                                                    <button class="btn btn-secondary">save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </li>
+                            <%}%>
+            </ul>
+
+            <!--resource list-->
+
+            <ul class="list-group my-3">
+                <%if(prbset.reslink.length!=0) {%>
+                    <li class="list-group-item active" aria-current="true">Study resources</li>
+                    <%}%>
+
+                        <div class="container mb-3">
+                            <div class="row">
+                                <% for(let ps of prbset.reslink ) { %>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 border p-2">
+                                        <a href="<%=ps.url%>" target="_blank">
+                                            <%=ps.url%>
+                                        </a>
+
+                                        <% if(currentUser && grp.cntAdmins.indexOf(currentUser._id)!=-1) { %>
+                                            <button type="button" class="btn ml-auto" data-bs-toggle="modal"
+                                                data-bs-target="#Modal<%=ps._id%>">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <div class="modal fade" id="Modal<%=ps._id%>" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                Edit</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form
+                                                                action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/src/<%=ps._id%>?_method=PUT"
+                                                                method="POST">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label" for="url">url</label>
+                                                                    <input class="form-control" type="text" id="url"
+                                                                        name="url" value="<%=ps.url%>" required>
+                                                                </div>
+                                                                <div class="mb-1">
+                                                                    <button class="btn btn-secondary">save</button>
+                                                                </div>
+                                                            </form>
+                                                            <form
+                                                                action="/group/<%=grp._id%>/problemset/<%=prbset._id%>/src/<%=ps._id%>?_method=DELETE"
+                                                                method="POST">
+                                                                <button class="btn btn-danger">delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                    </div>
+                                    <%}%>
+                            </div>
+                        </div>
+            </ul>
