@@ -19,8 +19,10 @@
                 <li>Adding any problem as favourite.</li>
                 <li>Getting all the contest at codeforces,codechef,atcoder in upcoming 7 days.</li>
             </ul>
-            <a href="/login" class="btn btn-primary">Login</a>
-            <a href="/register" class="btn btn-primary">Register</a>
+            <%if(!currentUser) {%>
+                <a href="/login" class="btn btn-primary">Login</a>
+                <a href="/register" class="btn btn-primary">Register</a>
+                <% } %>
         </div>
 
     </div>
