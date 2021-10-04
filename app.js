@@ -47,16 +47,6 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const secret = process.env.SECRET;
-app.use(
-    session({
-        store: MongoStore.create,
-        secret,
-        resave: false,
-        saveUninitialized: true
-    })
-);
-
-
 
 const store = new MongoStore({
     url: dbUrl,
