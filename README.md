@@ -1,6 +1,7 @@
-I made this project keeping in mind that I can get all the problems/study resources provided by my mentors at CodeISM at one place and use them efficiently. 
-So in this website Users can create their own groups or join their admin/mentor's group.( Sample group id : 615ad9acc32530e954b9b260 ) 
-This way you can access problemsets provided by admin or create your own problemset by simply creating your group. 
+Developed a website that provides an interface between mentors of a coding club and its students.
+Implemented CRUD operations on groups, problem sets, announcements , and group admin .
+Mentors can create their group and share coding problems and its related resources .
+( Sample group id : 615ad9acc32530e954b9b260 ) 
 Additional features include 
 
 1) Saving the status of a problem manually(like done or not done).
@@ -11,7 +12,3 @@ Additional features include
 Tech stack used 
 1) Html , css , bootstrap , js
 2) Node js , Express js , mongo db , ejs
-
-
-
-
