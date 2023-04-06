@@ -23,7 +23,7 @@ const userRoutes = require('./routes/user');
 const groupRoutes = require('./routes/group');
 const problemsetRoutes = require('./routes/problemset');
 
-const dbUrl = 'mongodb+srv://Iamharsh12gupta:<sa77tJA03pqD85Jm>@cluster0.z34op.mongodb.net/nemp?retryWrites=true&w=majority' || 'mongodb://localhost:27017/nemp';
+const dbUrl = 'mongodb+srv://Iamharsh12gupta:sa77tJA03pqD85Jm@cluster0.z34op.mongodb.net/nemp?retryWrites=true&w=majority' || 'mongodb://localhost:27017/nemp';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
