@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const secret = process.env.SECRET;
+const secret = 'thisisasecret';
 
 const store = new MongoStore({
     url: dbUrl,
