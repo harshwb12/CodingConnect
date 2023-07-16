@@ -21,6 +21,8 @@ The website was developed using the following technologies:
 
 Node.js | Express.js | EJS | Mongoose | MongoDb | CSS | Bootstrap | HTML
 
+Motivation - Stopstalk | CodeISM | CODEtronics | CyberlabsCP
+
 Future Plans - 
 1) Move the whole frontend to React .
 2) Work on improving the current core functionalities and adding new ones .
