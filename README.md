@@ -14,16 +14,10 @@ Group Admin: The website includes administrative features specifically designed 
 
 Notes and Favorites: Users, which include both mentors and students, can add personal notes to coding problems for future reference. They can also mark specific problems as favorites.
 
-Contest Details: The website provides a comprehensive view of upcoming coding contests of Codechef , Codeforces , Atcoder , including details such as date, time, and contest rules. This feature ensures that users stay informed about important coding events and can participate accordingly.
+Contest Details: The website provides a comprehensive view of upcoming coding contests of Codechef , Codeforces , Atcoder and includes date, time of the contests . This feature ensures that users stay informed about important coding events and can participate accordingly.
 
 Tech Stack:
 The website was developed using the following technologies:
-
 Node.js | Express.js | EJS | Mongoose | MongoDb | CSS | Bootstrap | HTML
 
-Motivation: Stopstalk | CodeISM | CODEtronics | CyberlabsCP
-
-Future Plans - 
-1) Move the whole frontend to React .
-2) Work on improving the current core functionalities and adding new ones .
-3) Make it better.
+Motivation: Stopstalk | CodeISM | CyberlabsCP | CODEtronics
