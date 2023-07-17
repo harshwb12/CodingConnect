@@ -21,3 +21,10 @@ The website was developed using the following technologies:
 Node.js | Express.js | EJS | Mongoose | MongoDb | CSS | Bootstrap | HTML
 
 Motivation: Stopstalk | CodeISM | CyberlabsCP | CODEtronics
+
+Future Plans - 
+1) Move the whole frontend to React .
+2) Work on improving the current core functionalities and adding new ones .
+3) Make it better
+
+Skills developed: Creative Problem Solving · Web Development - Understanding the UI/UX at basic level
